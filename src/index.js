@@ -7,18 +7,17 @@ import { preload } from './scenes/preload';
 import { howToPlay } from './scenes/howToPlay'
 
 var game;
+const localStorageName = "doublelanegame";
+const bgColors = [0x54c7fc, 0xffcd00, 0xff2851, 0x62bd18];
+
+
 window.onload = () => {
     var gameConfig = {
         type: Phaser.WEBGL,
         width: 480,
-        height: 640,
+        height: 960,
         backgroundColor: "black",
-        physics: {
-          default: "arcade",
-          arcade: {
-            gravity: { x: 0, y: 0 }
-          }
-        },
+
         scene: [ boot, preload, titleScreen, howToPlay, playGame, gameOverScreen ],
         pixelArt: true,
         roundPixels: true      
@@ -44,3 +43,4 @@ const resizeGame = ()=> {
         canvas.style.height = windowHeight + "px";
     }
 }
+

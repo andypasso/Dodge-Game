@@ -1,9 +1,14 @@
-export class boot extends Phaser.Scene{
-    constructor(){
+export class boot extends Phaser.Scene {
+    constructor() {
         super("Boot");
     }
-    create(){
-        console.log("game booting");
-        
+    preload() {
+        this.load.image("loading", "assets/sprites/loading.png");
     }
-  }
+    create() {
+        console.log("game booting");
+
+        this.scene.start("Preload");
+
+    }
+}
