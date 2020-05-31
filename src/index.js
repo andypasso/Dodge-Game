@@ -16,7 +16,12 @@ window.onload = () => {
         type: Phaser.WEBGL,
         width: 480,
         height: 960,
-        backgroundColor: "black",
+        physics: {
+            default: "arcade",
+            arcade: {
+              gravity: { x: 0, y: 0 }
+            }
+          },
 
         scene: [ boot, preload, titleScreen, howToPlay, playGame, gameOverScreen ],
         pixelArt: true,
