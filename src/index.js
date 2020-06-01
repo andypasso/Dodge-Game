@@ -50,4 +50,3 @@ const resizeGame = ()=> {
         canvas.style.height = windowHeight + "px";
     }
 }
-

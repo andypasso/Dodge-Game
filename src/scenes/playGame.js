@@ -13,11 +13,15 @@ export class playGame extends Phaser.Scene {
     this.load.image("barrier", "assets/sprites/barrier.png");
     this.load.plugin("Phaser3Swipe", Phaser3Swipe, true);
 
-    
+    this.load.image("separator", "assets/sprites/separator.png");
+    this.load.bitmapFont("font", "assets/fonts/font.png",
+      "assets/fonts/font.fnt");
 
   }
 
   create() {
+    const friendlyBarRatio = 15;
+    let score = 0;
 
     let swipe = this.plugins.get('Phaser3Swipe');
     swipe.cargar(this);
@@ -108,18 +112,19 @@ export class playGame extends Phaser.Scene {
         console.log("Hacer algo a la izquierda");
       }
       else if (e.up) {
-        if (ship.alpha==1) {
-          ship.alpha=0.5;
+        if (ship.alpha == 1) {
+          ship.alpha = 0.5;
+          this.highlightBar.visible = false;
           console.log(barrierSpeed)
           barrierSpeed *= barrierIncreaseSpeed;
-          for(var i = 0; i < this.barrierGroup.getChildren().length; i++){
+          for (var i = 0; i < this.barrierGroup.getChildren().length; i++) {
             this.barrierGroup.getChildren()[i].body.velocity.y = barrierSpeed;
           }
 
-        tweenUp.stop();
-        tweenDown.play();
-        setTimeout(() => { tweenUp.play() }, 110);
-        setTimeout(() => { ship.alpha=1 }, 1000);
+          tweenUp.stop();
+          tweenDown.play();
+          setTimeout(() => { tweenUp.play() }, 110);
+          setTimeout(() => { ship.alpha = 1 }, 1000);
 
         }
 
@@ -192,7 +197,7 @@ export class playGame extends Phaser.Scene {
     this.time.addEvent({
       delay: 700,
       callback: function () {
-        this.barrier = new Barrier({ scene: this, x: positions[Math.floor((positions.length) * Math.random())], y: -100 }, tunnelWidth, tintColor, barrierSpeed);
+        this.barrier = new Barrier({ scene: this, x: positions[Math.floor((positions.length) * Math.random())], y: -100 }, tunnelWidth, tintColor, barrierSpeed, friendlyBarRatio);
         this.barrierGroup.add(this.barrier);
       },
       callbackScope: this,
@@ -201,16 +206,77 @@ export class playGame extends Phaser.Scene {
 
     this.physics.add.collider(ship, this.barrierGroup, function (s, b) {
 
-      if (!ship.destroyed && ship.alpha===1) {
-        ship.destroyed = true;
-        const emitter2 = particles2.createEmitter(fueguito2);
-        emitter2.startFollow(ship);
-        ship.destroy();
-        particles.destroy();
-        setTimeout(() => { particles2.destroy() }, 510);
+      if (!ship.destroyed && ship.alpha === 1) {
+        if (!b.friendly) {
+          ship.destroyed = true;
+          const emitter2 = particles2.createEmitter(fueguito2);
+          emitter2.startFollow(ship);
+          ship.destroy();
+          particles.destroy();
+          setTimeout(() => { particles2.destroy() }, 510);
+        }
+        else {
+          if (b.alpha == 1) {
+            b.alpha = 0.2;
+            score = score * 2;
+          }
+        }
       }
     })
+
+    // working on scores
+
+    const scoreHeight = 100;
+    const scoreSegments = [100, 50, 25, 10, 5, 2, 1];
+    this.scoreHeight = scoreHeight;
+    this.scoreSegments = scoreSegments;
+
+
+    for (let i = 1; i <= scoreSegments.length; i++) {
+      let leftSeparator = this.add.sprite((this.game.config.width - tunnelWidth) / 2,
+        scoreHeight * i, "separator");
+      leftSeparator.tint = tintColor;
+      leftSeparator.setOrigin(1, 0);
+
+      let rightSeparator = this.add.sprite((this.game.config.width + tunnelWidth) /
+        2, scoreHeight * i, "separator");
+      rightSeparator.tint = tintColor;
+      rightSeparator.setOrigin(0, 0);
+
+      let posX = (this.game.config.width - tunnelWidth) / 2 - leftSeparator.width / 2;
+      if (i % 2 == 0) {
+        posX = (this.game.config.width + tunnelWidth) / 2 + leftSeparator.width / 2;
+      }
+
+      this.add.bitmapText(posX, scoreHeight * (i - 1) + scoreHeight / 2 - 18, "font",
+        scoreSegments[i - 1].toString(), 36).setOrigin(0.5, 0.5);
+    }
+
+    this.highlightBar = this.add.tileSprite(this.game.config.width / 2, 0, tunnelWidth,
+      scoreHeight, "smoke");
+    this.highlightBar.setOrigin(0.5, 0);
+    this.highlightBar.alpha = 0.1;
+    this.highlightBar.visible = false;
+
+    this.scoreText = this.add.bitmapText(55, this.game.config.height - 90, "font", "0", 48).setOrigin(0.5, 0.5);
+
+
+    this.time.addEvent({
+      delay: 250,
+      callback: function () {
+        if (this.ship.alpha == 1 && !this.ship.destroyed) {
+          if (this.ship.y < scoreHeight * scoreSegments.length) {
+            let row = Math.floor(this.ship.y / scoreHeight);
+            score += scoreSegments[row];
+            this.scoreText.text = score.toString();
+          }
+        }
+      },
+      callbackScope: this,
+      loop: true
+    })
   }
+
 
   update() {
 
@@ -226,6 +292,16 @@ export class playGame extends Phaser.Scene {
       }
 
     }
+    if (!this.ship.destroyed && this.ship.alpha == 1) {
+      if (this.ship.y < this.scoreHeight * this.scoreSegments.length) {
+        this.highlightBar.visible = true;
+        let row = Math.floor(this.ship.y / this.scoreHeight);
+        this.highlightBar.y = row * this.scoreHeight;
+      }
+    }
+
+
+
     if (this.ship.destroyed == true) {
       setTimeout(() => { this.scene.start("GameOverScreen") }, 510);
 
