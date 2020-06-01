@@ -4,7 +4,9 @@ import { titleScreen } from './scenes/titleScreen';
 import { playGame } from './scenes/playGame';
 import { gameOverScreen } from './scenes/gameOverScreen';
 import { preload } from './scenes/preload';
-import { howToPlay } from './scenes/howToPlay'
+import { howToPlay } from './scenes/howToPlay';
+import { Barrier } from './barriers';
+import 'phaser3-swipe' ;
 
 var game;
 const localStorageName = "doublelanegame";

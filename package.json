@@ -22,6 +22,7 @@
   "dependencies": {
     "jsdom-quokka-plugin": "^1.0.15",
     "phaser": "^3.23.0",
+    "phaser3-swipe": "^1.0.0",
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
