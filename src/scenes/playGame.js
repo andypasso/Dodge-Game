@@ -13,6 +13,8 @@ export class playGame extends Phaser.Scene {
     this.load.image("barrier", "assets/sprites/barrier.png");
     this.load.plugin("Phaser3Swipe", Phaser3Swipe, true);
 
+    
+
   }
 
   create() {
@@ -42,18 +44,20 @@ export class playGame extends Phaser.Scene {
 
     const shipHorizontalSpeed = 100;
     const shipVerticalSpeed = 15000;
-    const barrierSpeed = 280;
-    const barrierGap = 120;
+    let barrierSpeed = 280;
+    const barrierIncreaseSpeed = 1.1
+
 
 
     this.shipPositions = [(this.game.config.width - tunnelWidth) / 2 + 32, (this.game.config.width + tunnelWidth) / 2 - 32];
-    const ship = this.add.sprite(this.shipPositions[0], 860, "ship");
-    ship.scene.physics.world.enableBody(this, 0);
-
+    const ship = this.physics.add.sprite(this.shipPositions[0], 860, "ship");
+    ship.destroyed = false;
     ship.side = 0;
     ship.canMove = true;
-    ship.canSwipe = false;
+    ship.canSwipe = true;
     ship.setOrigin(0.5, 0.5);
+
+    this.ship = ship
 
     //movement Right
     const tweenR = this.tweens.add({
@@ -104,9 +108,20 @@ export class playGame extends Phaser.Scene {
         console.log("Hacer algo a la izquierda");
       }
       else if (e.up) {
+        if (ship.alpha==1) {
+          ship.alpha=0.5;
+          console.log(barrierSpeed)
+          barrierSpeed *= barrierIncreaseSpeed;
+          for(var i = 0; i < this.barrierGroup.getChildren().length; i++){
+            this.barrierGroup.getChildren()[i].body.velocity.y = barrierSpeed;
+          }
+
         tweenUp.stop();
         tweenDown.play();
-        setTimeout(() => { tweenUp.play(); }, 110);
+        setTimeout(() => { tweenUp.play() }, 110);
+        setTimeout(() => { ship.alpha=1 }, 1000);
+
+        }
 
         console.log("Hacer algo a la arriba");
       }
@@ -152,9 +167,24 @@ export class playGame extends Phaser.Scene {
 
     emitter.startFollow(ship)
 
+    // explosion emitter 
 
+    const particles2 = this.add.particles('smoke');
+    const fueguito2 = {
+      quantity: 20,
+      speed: { min: -800, max: 100 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 0.5, end: 2 },
+      blendMode: 'SCREEN',
+      lifespan: 400,
+      // speed:200,
+      // lifespan:500,
+      // blendMode:'ADD',
+      // scale:{start:1 ,end:0},
+
+    }
     // barriers
-    var positions = [(this.game.config.width - tunnelWidth) / 2, (this.game.config.width + tunnelWidth) /
+    const positions = [(this.game.config.width - tunnelWidth) / 2, (this.game.config.width + tunnelWidth) /
       2];
     this.barrierGroup = this.add.group();
 
@@ -169,14 +199,17 @@ export class playGame extends Phaser.Scene {
       loop: true
     });
 
+    this.physics.add.collider(ship, this.barrierGroup, function (s, b) {
 
-
-
-
-
-
-
-
+      if (!ship.destroyed && ship.alpha===1) {
+        ship.destroyed = true;
+        const emitter2 = particles2.createEmitter(fueguito2);
+        emitter2.startFollow(ship);
+        ship.destroy();
+        particles.destroy();
+        setTimeout(() => { particles2.destroy() }, 510);
+      }
+    })
   }
 
   update() {
@@ -193,15 +226,12 @@ export class playGame extends Phaser.Scene {
       }
 
     }
+    if (this.ship.destroyed == true) {
+      setTimeout(() => { this.scene.start("GameOverScreen") }, 510);
+
+
+    }
+
 
   }
 }
-
-//   addBarrier(group, tintColor) {
-//     let barrier = new Barrier({ scene: this, x: positions[Math.floor((positions.length) * Math.random())], y: -100 }, tunnelWidth, tintColor, barrierSpeed);
-//       game.add.existing(barrier);
-//     group.add(barrier);
-//     group.add(this.barrier);
-//   }
-// }
-

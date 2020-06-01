@@ -5,6 +5,7 @@ export class Barrier extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.tint = tintColor;
     this.body.velocity.y = speed;
+    this.body.immovable = true;
     config.scene.add.existing(this);
 
 }
