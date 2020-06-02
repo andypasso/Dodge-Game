@@ -13,6 +13,7 @@ const localStorageName = "doublelanegame";
 const bgColors = [0x54c7fc, 0xffcd00, 0xff2851, 0x62bd18];
 
 window.score = 0
+
 window.onload = () => {
     var gameConfig = {
         type: Phaser.WEBGL,
@@ -50,3 +51,39 @@ const resizeGame = ()=> {
         canvas.style.height = windowHeight + "px";
     }
 }
+
+// fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores')
+// .then((response) => {
+//     return response.json();
+// })
+// .then((myJson) => {
+//     let scoresGlobalArrays=[]
+//   myJson.result.forEach(element => {
+    
+//         scoresGlobalArrays.push(element.score);
+//   });
+//   window.hiScore = Math.max(...scoresGlobalArrays)  });
+
+
+fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores')
+  .then((response) => {
+      return response.json();
+  })
+  .then((myJson) => {
+      let scoresArrays = []
+      
+      myJson.result.forEach(element => {
+          
+          scoresArrays.push(element.score);
+      })
+      let maxScore = Math.max(...scoresArrays)
+      let maxScorePlayer 
+      myJson.result.forEach(element => {
+          if(element.score===maxScore){
+          maxScorePlayer = element.user
+          }
+      })
+
+      window.hiScore = Math.max(...scoresArrays)
+      window.hiPlayer = maxScorePlayer
+  });

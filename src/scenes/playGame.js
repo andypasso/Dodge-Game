@@ -207,12 +207,12 @@ export class playGame extends Phaser.Scene {
 
       if (!ship.destroyed && ship.alpha === 1) {
         if (!b.friendly) {
-          ship.destroyed = true;
           const emitter2 = particles2.createEmitter(fueguito2);
           emitter2.startFollow(ship);
           ship.destroy();
           particles.destroy();
           setTimeout(() => { particles2.destroy() }, 510);
+          setTimeout(() => { ship.destroyed = true }, 510);
         }
         else {
           if (b.alpha == 1) {
@@ -236,7 +236,6 @@ export class playGame extends Phaser.Scene {
         scoreHeight * i, "separator");
       leftSeparator.tint = tintColor;
       leftSeparator.setOrigin(1, 0);
-
       let rightSeparator = this.add.sprite((this.game.config.width + tunnelWidth) /
         2, scoreHeight * i, "separator");
       rightSeparator.tint = tintColor;
@@ -302,7 +301,7 @@ export class playGame extends Phaser.Scene {
 
 
     if (this.ship.destroyed == true) {
-      setTimeout(() => { this.scene.start("GameOverScreen") }, 510);
+      this.scene.start("GameOverScreen")
 
 
     }
