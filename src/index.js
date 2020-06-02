@@ -12,7 +12,7 @@ var game;
 const localStorageName = "doublelanegame";
 const bgColors = [0x54c7fc, 0xffcd00, 0xff2851, 0x62bd18];
 
-
+window.score = 0
 window.onload = () => {
     var gameConfig = {
         type: Phaser.WEBGL,

@@ -21,8 +21,7 @@ export class playGame extends Phaser.Scene {
 
   create() {
     const friendlyBarRatio = 15;
-    let score = 0;
-
+    score=0
     let swipe = this.plugins.get('Phaser3Swipe');
     swipe.cargar(this);
 
