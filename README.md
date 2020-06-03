@@ -17,10 +17,10 @@
 
 - The game is ment to give the impression of a Ship going through some sort of tunnel sorting different obstacles.
 - It is divided on different Scenes, each one with its own function. 
-- When the game runs , the user will see who has the current max score , and is able to start the game.
-- When the play icon is pressed, the user is taken to a scene where he is explained how to play the game , and from there he can start the actual game.
-- The ship goes up, and the idea  of the game is to dodge the coloured barriers , while getting the white ones. It is posible to take the ship down , but it makes the barries speed to go up. 
-- After the user Loses, he is prompted to inser his name, and taken to the Game Over screen, from where he can see the leader board , or restart the game. 
+- When the game runs, the user will see who has the current max score , and is able to start the game.
+- When the play icon is pressed, the user is taken to a scene where he is explained how to play the game, and from there he can start the actual game.
+- The ship goes up, and the idea  of the game is to dodge the coloured barriers, while getting the white ones. It is posible to take the ship down, but it makes the barries speed to go up. 
+- After the user Loses, he is prompted to inser his name, and taken to the Game Over screen, from where he can see the leader board, or restart the game. 
 - If the user decides to click the leaderboard icon, it will take the user to the leaderboards screen, from where he can re start the game again. 
 
 ## things yet left to do / improve
