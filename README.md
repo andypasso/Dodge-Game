@@ -4,6 +4,10 @@
 
 ![screenshot](https://raw.githubusercontent.com/andynarf/Dodge-Game/features/image%201.png)
 ![screenshot](https://raw.githubusercontent.com/andynarf/Dodge-Game/features/image%202.png)
+
+## Live version
+[Live Version](https://friendly-hodgkin-66df39.netlify.app/)
+
 ## How to Play 
 
 - Space key, touch or mouse click makes the ship move to the sides.
