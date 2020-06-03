@@ -3,7 +3,7 @@
 > This is a game made with Phaser 3.
 
 ![screenshot](https://raw.githubusercontent.com/andynarf/Dodge-Game/features/Screen%20Shot%202020-06-03%20at%2016.01.50.png)
-
+![screenshot](https://raw.githubusercontent.com/andynarf/Dodge-Game/features/Screen%20Shot%202020-06-03%20at%2016.01.50.png)
 ## How to Play 
 
 - Space key, touch or mouse click makes the ship move to the sides.
