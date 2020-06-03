@@ -17,6 +17,7 @@
       "no-undef":"off",
       "no-use-before-define":"off",
       "no-alert":"off",
-      "import/prefer-default-export":"off"
+      "import/prefer-default-export":"off",
+      "import/no-unresolved":"off"
     }
   }
