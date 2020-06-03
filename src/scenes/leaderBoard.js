@@ -1,6 +1,6 @@
-class howToPlay extends Phaser.Scene {
+class leaderBoard extends Phaser.Scene {
   constructor() {
-    super('HowToPlay');
+    super('LeaderBoard');
   }
 
   preload() {
@@ -21,34 +21,15 @@ class howToPlay extends Phaser.Scene {
 
     titleBG.setTint(bgColors[Math.floor((bgColors.length) * Math.random())]);
 
-    this.add.bitmapText(this.game.config.width * 0.5, 120, 'font', 'left / right', 60).setOrigin(0.5, 0.5);
-    this.add.bitmapText(this.game.config.width * 0.5, 200, 'font', 'Tap, Click or SPACEBAR key', 36).setOrigin(0.5, 0.5);
-    this.add.bitmapText(this.game.config.width * 0.5, 400, 'font', 'to the bottom', 60).setOrigin(0.5, 0.5);
-    this.add.bitmapText(this.game.config.width * 0.5, 480, 'font', 'Swipe up or SHIFT key', 36).setOrigin(0.5, 0.5);
 
-    const horizontalShip = this.add.sprite(this.game.config.width * 0.5 - 50, 260, 'ship').setOrigin(0.5, 0.5);
-    horizontalShip.setScale(0.5);
+    this.add.bitmapText(this.game.config.width * 0.5, 150, 'font', `1.- ${hiScores[0].user} `, 60).setOrigin(0.5, 0.5);
+    this.add.bitmapText(this.game.config.width * 0.5, 220, 'font', hiScores[0].score, 60).setOrigin(0.5, 0.5);
 
-    const verticalShip = this.add.sprite(this.game.config.width * 0.5, 540, 'ship').setOrigin(0.5, 0.5);
-    verticalShip.setScale(0.5);
+    this.add.bitmapText(this.game.config.width * 0.5, 320, 'font', `2.- ${hiScores[1].user} `, 42).setOrigin(0.5, 0.5);
+    this.add.bitmapText(this.game.config.width * 0.5, 370, 'font', hiScores[1].score, 42).setOrigin(0.5, 0.5);
 
-    const tweenH = this.tweens.add({
-      targets: horizontalShip,
-      x: this.game.config.width * 0.5 + 50,
-      paused: true,
-      yoyo: true,
-      loop: -1,
-    });
-
-    const tweenV = this.tweens.add({
-      targets: verticalShip,
-      y: 640,
-      paused: true,
-      yoyo: true,
-      loop: -1,
-    });
-    tweenH.play();
-    tweenV.play();
+    this.add.bitmapText(this.game.config.width * 0.5, 440, 'font', `3.- ${hiScores[2].user} `, 32).setOrigin(0.5, 0.5);
+    this.add.bitmapText(this.game.config.width * 0.5, 480, 'font', hiScores[2].score, 32).setOrigin(0.5, 0.5);
 
     const sprite = this.add.sprite(this.game.config.width * 0.5, this.game.config.height - 250, 'playbutton').setInteractive();
 
@@ -65,4 +46,5 @@ class howToPlay extends Phaser.Scene {
     }, this);
   }
 }
-export { howToPlay };
+
+export { leaderBoard };

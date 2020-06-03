@@ -5,6 +5,7 @@ import { playGame } from './scenes/playGame';
 import { gameOverScreen } from './scenes/gameOverScreen';
 import { preload } from './scenes/preload';
 import { howToPlay } from './scenes/howToPlay';
+import { leaderBoard } from './scenes/leaderBoard';
 import 'phaser3-swipe';
 
 let game;
@@ -23,7 +24,7 @@ window.onload = () => {
       },
     },
 
-    scene: [boot, preload, titleScreen, howToPlay, playGame, gameOverScreen],
+    scene: [boot, preload, titleScreen, howToPlay, playGame, gameOverScreen, leaderBoard],
     pixelArt: true,
     roundPixels: true,
   };
@@ -47,23 +48,3 @@ const resizeGame = () => {
     canvas.style.height = `${windowHeight}px`;
   }
 };
-
-fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores')
-  .then((response) => response.json())
-  .then((json) => {
-    const scoresArrays = [];
-
-    json.result.forEach(element => {
-      scoresArrays.push(element.score);
-    });
-    const maxScore = Math.max(...scoresArrays);
-    let maxScorePlayer;
-    json.result.forEach(element => {
-      if (element.score === maxScore) {
-        maxScorePlayer = element.user;
-      }
-    });
-
-    window.hiScore = Math.max(...scoresArrays);
-    window.hiPlayer = maxScorePlayer;
-  });

@@ -103,6 +103,11 @@ class playGame extends Phaser.Scene {
 
     tweenUp.play();
 
+    // inputs
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+
+
     // swipe
     this.events.on('swipe', (e) => {
       if (e.up) {
@@ -122,8 +127,40 @@ class playGame extends Phaser.Scene {
       }
     });
 
+    this.keyShift.on('down', () => {
+      if (ship.alpha === 1) {
+        ship.alpha = 0.5;
+        this.highlightBar.visible = false;
+        barrierSpeed *= barrierIncreaseSpeed;
+        for (let i = 0; i < this.barrierGroup.getChildren().length; i += 1) {
+          this.barrierGroup.getChildren()[i].body.velocity.y = barrierSpeed;
+        }
+
+        tweenUp.stop();
+        tweenDown.play();
+        setTimeout(() => { tweenUp.play(); }, 110);
+        setTimeout(() => { ship.alpha = 1; }, 1000);
+      }
+    });
+
 
     this.input.on('pointerdown', () => {
+      if (ship.canMove) {
+        ship.canMove = false;
+
+        if (ship.side === 0) {
+          tweenR.play();
+          ship.side = 1 - ship.side;
+          ship.canMove = true;
+        } else {
+          tweenL.play();
+          ship.side = 1 - ship.side;
+          ship.canMove = true;
+        }
+      }
+    });
+
+    this.keySpace.on('down', () => {
       if (ship.canMove) {
         ship.canMove = false;
 

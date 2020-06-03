@@ -15,5 +15,4 @@ class Barrier extends Phaser.GameObjects.Sprite {
     }
   }
 }
-
 export { Barrier };

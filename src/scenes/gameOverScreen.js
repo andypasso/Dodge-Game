@@ -3,6 +3,10 @@ class gameOverScreen extends Phaser.Scene {
     super('GameOverScreen');
   }
 
+  preload() {
+    this.load.image('leaderboard', 'assets/sprites/leaderboard.png');
+  }
+
   create() {
     const bgColors = [0xF16745, 0xFFC65D, 0x7BC8A4, 0x4CC3D9, 0x93648D, 0x7c786a,
       0x588c73, 0x8c4646, 0x2a5b84, 0x73503c];
@@ -16,10 +20,26 @@ class gameOverScreen extends Phaser.Scene {
     this.add.bitmapText(this.game.config.width / 2, 150, 'font', score.toString(),
       72).setOrigin(0.5, 0.5);
 
-    const sprite = this.add.sprite(this.game.config.width * 0.5, this.game.config.height - 250, 'playbutton').setInteractive();
+    const sprite2 = this.add.sprite(this.game.config.width * 0.5, 250, 'leaderboard').setInteractive();
 
+
+    sprite2.on('pointerover', () => {
+      sprite2.setTint(bgColors[Math.floor((bgColors.length) * Math.random())]);
+    });
+
+    sprite2.on('pointerout', () => {
+      sprite2.clearTint();
+    });
+
+    sprite2.on('pointerdown', () => {
+      this.scene.start('LeaderBoard');
+    }, this);
+
+
+    const sprite = this.add.sprite(this.game.config.width * 0.5, this.game.config.height - 250, 'playbutton').setInteractive();
+    sprite2.setScale(1.5);
     sprite.on('pointerover', () => {
-      sprite.setTint('#00f');
+      sprite.setTint(bgColors[Math.floor((bgColors.length) * Math.random())]);
     });
 
     sprite.on('pointerout', () => {
@@ -31,42 +51,47 @@ class gameOverScreen extends Phaser.Scene {
     }, this);
 
     const data = { user: '', score: '' };
-
-    if (score > hiScore) {
-      const name = window.prompt('Enter your name: ');
+    const name = window.prompt('Enter your name: ');
 
 
-      data.user = name;
-      data.score = score;
+    data.user = name;
+    data.score = score;
 
-      const post = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores', {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+    const post = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json()).then(() => {
+      if (score > hiScores[0].score) {
+        this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
+          'Highest Score', 34).setOrigin(0.5, 0.5);
 
-      post();
+        this.add.bitmapText(this.game.config.width * 0.5, 400, 'font',
+          score, 54).setOrigin(0.5, 0.5);
 
-      window.hiScore = score;
-      window.hiPlayer = name;
-    }
+        this.add.bitmapText(this.game.config.width * 0.5, 450, 'font',
+          'by', 24).setOrigin(0.5, 0.5);
 
-    this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
-      'Highest Score', 34).setOrigin(0.5, 0.5);
+        this.add.bitmapText(this.game.config.width * 0.5, 500, 'font',
+          name, 34).setOrigin(0.5, 0.5);
+      } else {
+        this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
+          'Highest Score', 34).setOrigin(0.5, 0.5);
 
-    this.add.bitmapText(this.game.config.width * 0.5, 400, 'font',
-      hiScore, 54).setOrigin(0.5, 0.5);
+        this.add.bitmapText(this.game.config.width * 0.5, 400, 'font',
+          hiScores[0].score, 54).setOrigin(0.5, 0.5);
 
-    this.add.bitmapText(this.game.config.width * 0.5, 450, 'font',
-      'by', 24).setOrigin(0.5, 0.5);
+        this.add.bitmapText(this.game.config.width * 0.5, 450, 'font',
+          'by', 24).setOrigin(0.5, 0.5);
 
-    this.add.bitmapText(this.game.config.width * 0.5, 500, 'font',
-      hiPlayer, 34).setOrigin(0.5, 0.5);
+        this.add.bitmapText(this.game.config.width * 0.5, 500, 'font',
+          hiScores[0].user, 34).setOrigin(0.5, 0.5);
+      }
+    });
+
+    post();
   }
 }
-
 export { gameOverScreen };
