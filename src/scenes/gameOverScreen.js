@@ -52,7 +52,7 @@ class gameOverScreen extends Phaser.Scene {
 
     const data = { user: '', score: '' };
     const name = window.prompt('Enter your name: ');
-
+    console.log(name);
 
     data.user = name;
     data.score = score;
@@ -91,7 +91,21 @@ class gameOverScreen extends Phaser.Scene {
       }
     });
 
-    post();
+    if (name != null) {
+      post();
+    } else {
+      this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
+        'Highest Score', 34).setOrigin(0.5, 0.5);
+
+      this.add.bitmapText(this.game.config.width * 0.5, 400, 'font',
+        hiScores[0].score, 54).setOrigin(0.5, 0.5);
+
+      this.add.bitmapText(this.game.config.width * 0.5, 450, 'font',
+        'by', 24).setOrigin(0.5, 0.5);
+
+      this.add.bitmapText(this.game.config.width * 0.5, 500, 'font',
+        hiScores[0].user, 34).setOrigin(0.5, 0.5);
+    }
   }
 }
 export { gameOverScreen };
