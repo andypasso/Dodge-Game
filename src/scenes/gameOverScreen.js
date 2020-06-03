@@ -52,7 +52,6 @@ class gameOverScreen extends Phaser.Scene {
 
     const data = { user: '', score: '' };
     const name = window.prompt('Enter your name: ');
-    console.log(name);
 
     data.user = name;
     data.score = score;
