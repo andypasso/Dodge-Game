@@ -16,7 +16,6 @@
 - Game is Over when hit by a coloured barrier.
 
 
-
 ## Game Design and development
 
 - The game is ment to give the impression of a Ship going through some sort of tunnel sorting different obstacles.
