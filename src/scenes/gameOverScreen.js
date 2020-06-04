@@ -56,7 +56,7 @@ class gameOverScreen extends Phaser.Scene {
     data.user = name;
     data.score = score;
 
-    const post = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores', {
+    const post = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/xYFwEP6ZAX6KvJiGNbzB/scores', {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data), // data can be `string` or {object}!
       headers: {

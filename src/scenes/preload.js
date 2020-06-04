@@ -17,7 +17,7 @@ class preload extends Phaser.Scene {
     this.add.sprite(this.game.config.width * 0.5, 450, 'loading').setScale(0.2);
 
 
-    const getHi = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/JyCID2FeFQ5q9uisgHo5/scores')
+    const getHi = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/xYFwEP6ZAX6KvJiGNbzB/scores')
       .then((response) => response.json())
       .then((json) => {
         json.result.sort((a, b) => {
