@@ -1,15 +1,15 @@
 import 'phaser';
-import { boot } from './scenes/boot';
-import { titleScreen } from './scenes/titleScreen';
-import { playGame } from './scenes/playGame';
-import { gameOverScreen } from './scenes/gameOverScreen';
-import { preload } from './scenes/preload';
-import { howToPlay } from './scenes/howToPlay';
-import { leaderBoard } from './scenes/leaderBoard';
+import { Boot } from './scenes/boot';
+import { TitleScreen } from './scenes/titleScreen';
+import { PlayGame } from './scenes/playGame';
+import { GameOverScreen } from './scenes/gameOverScreen';
+import { Preload } from './scenes/preload';
+import { HowToPlay } from './scenes/howToPlay';
+import { LeaderBoard } from './scenes/leaderBoard';
 import 'phaser3-swipe';
 
 let game;
-
+window.hiScores = {};
 window.score = 0;
 
 window.onload = () => {
@@ -24,7 +24,7 @@ window.onload = () => {
       },
     },
 
-    scene: [boot, preload, titleScreen, howToPlay, playGame, gameOverScreen, leaderBoard],
+    scene: [Boot, Preload, TitleScreen, HowToPlay, PlayGame, GameOverScreen, LeaderBoard],
     pixelArt: true,
     roundPixels: true,
   };

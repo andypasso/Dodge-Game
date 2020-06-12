@@ -1,4 +1,4 @@
-class howToPlay extends Phaser.Scene {
+class HowToPlay extends Phaser.Scene {
   constructor() {
     super('HowToPlay');
   }
@@ -65,4 +65,4 @@ class howToPlay extends Phaser.Scene {
     }, this);
   }
 }
-export { howToPlay };
+export { HowToPlay };

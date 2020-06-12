@@ -1,4 +1,4 @@
-class titleScreen extends Phaser.Scene {
+class TitleScreen extends Phaser.Scene {
   constructor() {
     super('TitleScreen');
   }
@@ -53,4 +53,4 @@ class titleScreen extends Phaser.Scene {
   }
 }
 
-export { titleScreen };
+export { TitleScreen };

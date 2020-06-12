@@ -1,5 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-class preload extends Phaser.Scene {
+import { getHi } from '../getHi';
+
+class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
   }
@@ -16,25 +17,23 @@ class preload extends Phaser.Scene {
       'loading...', 42).setOrigin(0.5, 0.5);
     this.add.sprite(this.game.config.width * 0.5, 450, 'loading').setScale(0.2);
 
-
-    const getHi = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/xYFwEP6ZAX6KvJiGNbzB/scores')
-      .then((response) => response.json())
-      .then((json) => {
-        json.result.sort((a, b) => {
-          if (a.score < b.score) {
-            return 1;
-          }
-          if (a.score > b.score) {
-            return -1;
-          }
-          // a must be equal to b
-          return 0;
-        });
-        window.hiScores = json.result;
-        this.scene.start('TitleScreen');
+    const handleResponse = (json) => {
+      json.result.sort((a, b) => {
+        if (a.score < b.score) {
+          return 1;
+        }
+        if (a.score > b.score) {
+          return -1;
+        }
+        return 0;
       });
+      window.hiScores = json.result;
+      this.scene.start('TitleScreen');
+    };
 
-    getHi();
+    getHi().then((json) => handleResponse(json))
+      // eslint-disable-next-line no-console
+      .catch((error) => console.log(`error:${error}`));
   }
 }
-export { preload };
+export { Preload };

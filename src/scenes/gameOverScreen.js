@@ -1,4 +1,6 @@
-class gameOverScreen extends Phaser.Scene {
+import { post } from '../post';
+
+class GameOverScreen extends Phaser.Scene {
   constructor() {
     super('GameOverScreen');
   }
@@ -50,19 +52,14 @@ class gameOverScreen extends Phaser.Scene {
       this.scene.start('PlayGame');
     }, this);
 
-    const data = { user: '', score: '' };
+    const data = { user: '', score: '', url: '' };
     const name = window.prompt('Enter your name: ');
 
     data.user = name;
     data.score = score;
+    data.url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/xYFwEP6ZAX6KvJiGNbzB/scores';
 
-    const post = () => fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/xYFwEP6ZAX6KvJiGNbzB/scores', {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(data), // data can be `string` or {object}!
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(res => res.json()).then(() => {
+    const afterPost = () => {
       if (score > hiScores[0].score) {
         this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
           'Highest Score', 34).setOrigin(0.5, 0.5);
@@ -88,10 +85,12 @@ class gameOverScreen extends Phaser.Scene {
         this.add.bitmapText(this.game.config.width * 0.5, 500, 'font',
           hiScores[0].user, 34).setOrigin(0.5, 0.5);
       }
-    });
+    };
 
     if (name != null) {
-      post();
+      post(data).then(afterPost())
+      // eslint-disable-next-line no-console
+        .catch((error) => console.log(`error:${error}`));
     } else {
       this.add.bitmapText(this.game.config.width * 0.5, 350, 'font',
         'Highest Score', 34).setOrigin(0.5, 0.5);
@@ -107,4 +106,4 @@ class gameOverScreen extends Phaser.Scene {
     }
   }
 }
-export { gameOverScreen };
+export { GameOverScreen };

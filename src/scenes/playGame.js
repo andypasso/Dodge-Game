@@ -1,6 +1,6 @@
 import { Barrier } from '../barriers';
 
-class playGame extends Phaser.Scene {
+class PlayGame extends Phaser.Scene {
   constructor() {
     super('PlayGame');
   }
@@ -43,10 +43,7 @@ class playGame extends Phaser.Scene {
     const tunnelBG = this.add.tileSprite(this.game.config.width * 0.5,
       this.game.config.height * 0.5, tunnelWidth, this.game.config.height, 'tunnelbg');
 
-
     tunnelBG.setTint(tintColor);
-
-    // adding the ship
 
     const shipHorizontalSpeed = 100;
     const shipVerticalSpeed = 15000;
@@ -88,7 +85,6 @@ class playGame extends Phaser.Scene {
       paused: true,
       duration: shipVerticalSpeed,
       yoyo: false,
-      // repeat: -1,
     });
 
     // move Down
@@ -98,7 +94,6 @@ class playGame extends Phaser.Scene {
       paused: true,
       duration: shipHorizontalSpeed,
       yoyo: false,
-      // onComplete: tweenUp.play()
     });
 
     tweenUp.play();
@@ -200,13 +195,10 @@ class playGame extends Phaser.Scene {
       scale: { start: 0.5, end: 2 },
       blendMode: 'SCREEN',
       lifespan: 400,
-      // speed:200,
-      // lifespan:500,
-      // blendMode:'ADD',
-      // scale:{start:1 ,end:0},
-
     };
+
     // barriers
+
     const positions = [(this.game.config.width - tunnelWidth) / 2,
       (this.game.config.width + tunnelWidth)
     / 2];
@@ -221,7 +213,6 @@ class playGame extends Phaser.Scene {
           x: positions[Math.floor((positions.length) * Math.random())],
           y: -100,
         },
-        tunnelWidth,
         tintColor,
         barrierSpeed,
         friendlyBarRatio);
@@ -323,4 +314,4 @@ class playGame extends Phaser.Scene {
   }
 }
 
-export { playGame };
+export { PlayGame };

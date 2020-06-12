@@ -1,5 +1,5 @@
 class Barrier extends Phaser.GameObjects.Sprite {
-  constructor(config, tunnelWidth, tintColor, speed, friendlyBarRatio) {
+  constructor(config, tintColor, speed, friendlyBarRatio) {
     super(config.scene, config.x, config.y, 'barrier');
 
     this.scene.physics.world.enableBody(this, 0);

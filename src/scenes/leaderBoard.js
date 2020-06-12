@@ -1,4 +1,4 @@
-class leaderBoard extends Phaser.Scene {
+class LeaderBoard extends Phaser.Scene {
   constructor() {
     super('LeaderBoard');
   }
@@ -47,4 +47,4 @@ class leaderBoard extends Phaser.Scene {
   }
 }
 
-export { leaderBoard };
+export { LeaderBoard };
