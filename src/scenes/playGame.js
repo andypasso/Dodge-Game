@@ -62,7 +62,6 @@ class PlayGame extends Phaser.Scene {
 
     this.ship = ship;
 
-    // movement Right
     const tweenR = this.tweens.add({
       targets: ship,
       x: this.shipPositions[1],
@@ -70,7 +69,6 @@ class PlayGame extends Phaser.Scene {
       duration: shipHorizontalSpeed,
       yoyo: false,
     });
-    // movement Left
     const tweenL = this.tweens.add({
       targets: ship,
       x: this.shipPositions[0],
@@ -78,7 +76,6 @@ class PlayGame extends Phaser.Scene {
       duration: shipHorizontalSpeed,
       yoyo: false,
     });
-    // move Up
     const tweenUp = this.tweens.add({
       targets: ship,
       y: 0,
@@ -87,7 +84,6 @@ class PlayGame extends Phaser.Scene {
       yoyo: false,
     });
 
-    // move Down
     const tweenDown = this.tweens.add({
       targets: ship,
       y: 860,
@@ -98,12 +94,10 @@ class PlayGame extends Phaser.Scene {
 
     tweenUp.play();
 
-    // inputs
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
 
-    // swipe
     this.events.on('swipe', (e) => {
       if (e.up) {
         if (ship.alpha === 1) {
@@ -171,7 +165,6 @@ class PlayGame extends Phaser.Scene {
       }
     });
 
-    // ship following particles emitter
     const particles = this.add.particles('smoke');
     const fueguito = {
       quantity: 0.5,
@@ -185,8 +178,6 @@ class PlayGame extends Phaser.Scene {
 
     emitter.startFollow(ship);
 
-    // explosion emitter
-
     const particles2 = this.add.particles('smoke');
     const fueguito2 = {
       quantity: 20,
@@ -196,8 +187,6 @@ class PlayGame extends Phaser.Scene {
       blendMode: 'SCREEN',
       lifespan: 400,
     };
-
-    // barriers
 
     const positions = [(this.game.config.width - tunnelWidth) / 2,
       (this.game.config.width + tunnelWidth)
@@ -238,7 +227,6 @@ class PlayGame extends Phaser.Scene {
       }
     });
 
-    // working on scores
 
     const scoreHeight = 100;
     const scoreSegments = [100, 50, 25, 10, 5, 2, 1];

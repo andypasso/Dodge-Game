@@ -10,7 +10,6 @@ it('works', () => {
 it(' calls the api and returns data to me', () => {
   fetch.mockResponseOnce(JSON.stringify({ body: 'it works' }));
 
-  // assert on the response
   getHi().then(res => {
     expect(res.body).toEqual('it works');
   });
