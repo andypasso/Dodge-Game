@@ -1,4 +1,5 @@
 import 'phaser';
+import 'phaser3-swipe';
 import { Boot } from './scenes/boot';
 import { TitleScreen } from './scenes/titleScreen';
 import { PlayGame } from './scenes/playGame';
@@ -6,7 +7,6 @@ import { GameOverScreen } from './scenes/gameOverScreen';
 import { Preload } from './scenes/preload';
 import { HowToPlay } from './scenes/howToPlay';
 import { LeaderBoard } from './scenes/leaderBoard';
-import 'phaser3-swipe';
 
 let game;
 window.hiScores = {};
