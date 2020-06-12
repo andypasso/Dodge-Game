@@ -1,0 +1,24 @@
+{
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "extends": ["airbnb-base"],
+    "rules": {
+      "no-shadow": "off",
+      "no-param-reassign": "off",
+      "eol-last": "off",
+      "arrow-parens": "off",
+      "no-undef":"off",
+      "no-use-before-define":"off",
+      "no-alert":"off",
+      "import/prefer-default-export":"off",
+      "import/no-unresolved":"off",
+      "no-mixed-operators":"off"
+    }
+  }
