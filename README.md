@@ -6,7 +6,7 @@
 ![screenshot](https://raw.githubusercontent.com/andynarf/Dodge-Game/features/image%202.png)
 
 ## Live version
-[Live Version](https://friendly-hodgkin-66df39.netlify.app/)
+[Live Version](https://dodge-game.netlify.app/)
 
 ## How to Play 
 
